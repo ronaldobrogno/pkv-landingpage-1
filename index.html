@@ -1,30 +1,32 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PKVStartklar – PKV Tarifvergleich für Angestellte, Selbstständige & Beamte</title>
+<title>PKVStartklar – PKV Tarifvergleich</title>
 <style>
   :root {
     --green: #2a7a3e;
     --green-light: #4caf50;
-    --green-dark: #1f5c2a;
+    --green-dark: #1f5a2a;
     --gray-light: #f7f9f7;
-    --gray-dark: #555;
-    --white: #fff;
+    --gray-medium: #a0a0a0;
+    --gray-dark: #444444;
+    --white: #ffffff;
+    --font-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   * {
     box-sizing: border-box;
   }
   body {
     margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--gray-light);
-    color: var(--green-dark);
+    font-family: var(--font-sans);
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
     line-height: 1.5;
   }
   a {
-    color: var(--green-dark);
+    color: var(--green);
     text-decoration: none;
   }
   a:hover,
@@ -43,7 +45,6 @@
   }
   h1 {
     font-size: 2.25rem;
-    font-weight: 700;
     line-height: 1.1;
   }
   h2 {
@@ -58,7 +59,7 @@
     margin-top: 0;
     margin-bottom: 1rem;
   }
-  button {
+  button, input[type="submit"] {
     background-color: var(--green);
     color: var(--white);
     border: none;
@@ -69,28 +70,43 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  button:disabled {
-    background-color: #a5d6a7;
-    cursor: not-allowed;
-  }
-  button:hover:not(:disabled),
-  button:focus:not(:disabled) {
+  button:hover, input[type="submit"]:hover,
+  button:focus, input[type="submit"]:focus {
     background-color: var(--green-dark);
-  }
-  input, select, textarea {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1.5px solid #c7d9c9;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: inherit;
-    color: var(--green-dark);
-    transition: border-color 0.3s ease;
-  }
-  input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--green);
-    box-shadow: 0 0 5px var(--green-light);
+  }
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+  /* Hero */
+  .hero {
+    background-color: var(--white);
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+    margin-bottom: 3rem;
+  }
+  .hero p {
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    color: var(--gray-medium);
+  }
+  /* Form */
+  form {
+    background-color: var(--gray-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: inset 0 0 8px rgb(0 0 0 / 0.05);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .form-row {
+    margin-bottom: 1rem;
   }
   label {
     display: block;
@@ -98,118 +114,101 @@
     margin-bottom: 0.25rem;
     color: var(--green-dark);
   }
-  form > div {
-    margin-bottom: 1rem;
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid var(--gray-medium);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    transition: border-color 0.3s ease;
   }
-  .checkbox-label {
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--green);
+    outline: none;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .checkbox-row {
     display: flex;
     align-items: center;
-    font-weight: 400;
     gap: 0.5rem;
-    user-select: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--gray-dark);
   }
-  .checkbox-label input[type="checkbox"] {
-    width: 1.15rem;
-    height: 1.15rem;
-    margin: 0;
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
     cursor: pointer;
   }
-  .hero {
-    background: var(--white);
-    padding: 3rem 1.5rem 4rem;
+  .checkbox-row a {
+    color: var(--green);
+    font-weight: 600;
+  }
+  /* Benefits */
+  .benefits {
+    background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 4px 14px rgb(42 122 62 / 0.15);
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+    margin-bottom: 3rem;
+  }
+  .benefits-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 600px) {
+    .benefits-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .benefit-item {
     text-align: center;
   }
-  .hero h1 {
+  .benefit-icon {
+    font-size: 2.5rem;
+    color: var(--green);
     margin-bottom: 0.5rem;
   }
-  .hero p {
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #3a5d3a;
-  }
-  .form-container {
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-  }
-  .benefits, .steps, .faq {
-    background: var(--white);
-    margin-top: 3rem;
-    padding: 2rem 1.5rem;
+  /* Steps */
+  .steps {
+    background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 4px 14px rgb(42 122 62 / 0.1);
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+    margin-bottom: 3rem;
   }
-  .benefits-list, .steps-list, .faq-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .benefits-list li, .steps-list li {
+  .steps-list {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    flex-direction: column;
+    gap: 1.5rem;
   }
-  .benefits-list li svg, .steps-list li svg {
-    flex-shrink: 0;
-    margin-top: 4px;
-    fill: var(--green);
-    width: 28px;
-    height: 28px;
+  @media (min-width: 600px) {
+    .steps-list {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
-  .benefits-list li div, .steps-list li div {
-    flex-grow: 1;
+  .step-item {
+    background-color: var(--gray-light);
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+    flex: 1;
+    text-align: center;
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 0.05);
   }
-  .steps-list li {
-    counter-increment: step-counter;
-  }
-  .steps-list li::before {
-    content: counter(step-counter);
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    background: var(--green);
-    color: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .step-number {
+    font-size: 1.5rem;
     font-weight: 700;
-    font-size: 1.1rem;
-    margin-right: 1rem;
-    user-select: none;
-  }
-  .faq-list li {
-    margin-bottom: 1rem;
-  }
-  .faq-list button {
-    background: none;
-    border: none;
-    color: var(--green-dark);
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    text-align: left;
-  }
-  .faq-list button:focus {
-    outline-offset: 3px;
-    outline: 2px solid var(--green);
-  }
-  .faq-answer {
-    margin-top: 0.25rem;
-    padding-left: 1rem;
-    color: #3a5d3a;
-    font-size: 0.95rem;
-    display: none;
-  }
-  .
